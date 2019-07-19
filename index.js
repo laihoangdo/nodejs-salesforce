@@ -33,6 +33,11 @@ if(deployToWeb) {
     var port = process.env.PORT || 8675;
     var express = require('express');
     var app = express();
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     var conn = new jsforce.Connection();
     conn.login('laihoangdo0506@gmail.com', 'do0972268792O7boPVAkzdColqYTKFS3c0Ei', function(err, res) {
         if (err) {
