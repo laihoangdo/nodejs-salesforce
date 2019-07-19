@@ -94,7 +94,7 @@ if(deployToWeb) {
         displayAccountsSOQL(req,res);
     });
     app.get('/blogs/', function(req, res) {
-        conn.query("SELECT Id, Name, Content__c, Tittle__c FROM Blog__c", function(err, result) {
+        conn.query("SELECT Id, Name, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c", function(err, result) {
             if (err) { res.json(err); }
             console.log("total : " + result.totalSize);
             res.json(result);
