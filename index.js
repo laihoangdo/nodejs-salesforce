@@ -100,6 +100,14 @@ if(deployToWeb) {
             res.json(result);
         });
     });
+    app.get('/blogs/:id', function(req, res) {
+        let id = req.params.id;
+        conn.query("SELECT Id, Name, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c WHERE Id ='" + id + "' Limit 1", function(err, result) {
+            if (err) { res.json(err); }
+            console.log("total : " + result.totalSize);
+            res.json(result.records[0]);
+        });
+    });
 
     //setup actual server
     var server = app.listen(port, function () {
