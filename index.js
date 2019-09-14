@@ -94,7 +94,14 @@ if(deployToWeb) {
         displayAccountsSOQL(req,res);
     });
     app.get('/blogs/', function(req, res) {
-        conn.query("SELECT Id, Name, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c", function(err, result) {
+        conn.query("SELECT Id, Name,Url__c, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c LIMIT 20", function(err, result) {
+            if (err) { res.json(err); }
+            console.log("total : " + result.totalSize);
+            res.json(result);
+        });
+    });
+    app.get('/blogs-limit/', function(req, res) {
+        conn.query("SELECT Id, Name,Url__c, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c ORDER BY CreatedDate ASC  LIMIT 4", function(err, result) {
             if (err) { res.json(err); }
             console.log("total : " + result.totalSize);
             res.json(result);
@@ -102,7 +109,7 @@ if(deployToWeb) {
     });
     app.get('/blogs/:id', function(req, res) {
         let id = req.params.id;
-        conn.query("SELECT Id, Name, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c FROM Blog__c WHERE Id ='" + id + "' Limit 1", function(err, result) {
+        conn.query("SELECT Id, Name, Image__c ,CreatedDate , Author__c ,Author_Link_Social__c ,Tag__c, Content__c, Tittle__c , Url__c FROM Blog__c WHERE Url__c ='" + id + "' Limit 1", function(err, result) {
             if (err) { res.json(err); }
             console.log("total : " + result.totalSize);
             res.json(result.records[0]);
